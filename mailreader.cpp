@@ -9,8 +9,8 @@
 #include "mailreader.h"
 #include "configuration.h"
 
-MailReader::MailReader(QDeclarativeItem *parent)
-    : QDeclarativeItem(parent)
+MailReader::MailReader(QQuickItem *parent)
+    : QQuickItem(parent)
 {
     QString path = MAIL_PATH;
     this->mailDB = MAIL_DB;
@@ -555,13 +555,13 @@ QString MailReader::quotedPrintableDecode(QString &input, QString _codec)
 
     for (int i = 0; i < input.length(); ++i)
     {
-        if (input.at(i).toAscii() == '=')
+        if (input.at(i).toLatin1() == '=')
         {
-            output->append((hexVal[input.at(++i).toAscii() - '0'] << 4) + hexVal[input.at(++i).toAscii() - '0']);
+            output->append((hexVal[input.at(++i).toLatin1() - '0'] << 4) + hexVal[input.at(++i).toLatin1() - '0']);
         }
         else
         {
-            output->append(input.at(i).toAscii());
+            output->append(input.at(i).toLatin1());
         }
     }
 

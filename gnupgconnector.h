@@ -1,7 +1,7 @@
 #ifndef GNUPGCONNECTOR_H
 #define GNUPGCONNECTOR_H
 
-#include <QDeclarativeItem>
+#include <QQuickItem>
 #include <QFile>
 #include <QClipboard>
 #include <QProcess>
@@ -26,13 +26,13 @@
 
 
 
-class GnuPGConnector : public QDeclarativeItem
+class GnuPGConnector : public QQuickItem
 {
     Q_OBJECT
     //Q_PROPERTY(QStringList allPubKeys READ getKeys)
 
 public:
-    explicit GnuPGConnector(QDeclarativeItem *parent = 0);
+    explicit GnuPGConnector(QQuickItem *parent = 0);
 
     Q_INVOKABLE QString encrypt(QString _input, QString _recipient);
     Q_INVOKABLE QString decrypt(QString _input, QString _passphrase);

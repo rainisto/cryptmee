@@ -1,5 +1,5 @@
 #include <QDebug>
-#include <QApplication>
+#include <QGuiApplication>
 #include <QDir>
 #include <QFile>
 #include <QSettings>
@@ -7,8 +7,8 @@
 
 #include "gnupgconnector.h"
 
-GnuPGConnector::GnuPGConnector(QDeclarativeItem *parent)
-    : QDeclarativeItem(parent)
+GnuPGConnector::GnuPGConnector(QQuickItem *parent)
+    : QQuickItem(parent)
 {
     qDebug() << "GnuPGConnector!";
     this->gpgHistory.append("=== CryptMee started");
@@ -234,7 +234,7 @@ QString GnuPGConnector::showSecretKeys()
 
 QString GnuPGConnector::getFromClipboard()
 {
-    QString clip =  QApplication::clipboard()->text(QClipboard::Clipboard);
+    QString clip =  QGuiApplication::clipboard()->text(QClipboard::Clipboard);
     qDebug() << "GnuPGConnector::getFromClipboard() == " << clip;
 
     return clip;
@@ -243,7 +243,7 @@ QString GnuPGConnector::getFromClipboard()
 void GnuPGConnector::setToClipboard(QString _data)
 {
     qDebug() << "GnuPGConnector::setToClipboard(" << _data << ")";
-    QApplication::clipboard()->setText(_data, QClipboard::Clipboard);
+    QGuiApplication::clipboard()->setText(_data, QClipboard::Clipboard);
 }
 
 QString GnuPGConnector::getGPGVersionString()

@@ -1,16 +1,18 @@
-#include <QtGui/QApplication>
-#include <qdeclarativeengine.h>
-#include <qdeclarativecontext.h>
-#include <qdeclarative.h>
-#include <qdeclarativeitem.h>
-#include <qdeclarativeview.h>
+#include <QGuiApplication>
+#include <QQuickItem>
+#include <QQmlEngine>
+#include <QQuickView>
+#include <QQmlContext>
+
 
 #include <QTranslator>
 #include <QTextCodec>
 #include <QLocale>
 #include <QDir>
 
-#include "qmlapplicationviewer.h"
+#include "qtquick2applicationviewer.h"
+
+//#include "qmlapplicationviewer.h"
 #include "gnupgconnector.h"
 #include "mailreader.h"
 #include "configuration.h"
@@ -18,8 +20,9 @@
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-    QScopedPointer<QApplication> app(createApplication(argc, argv));
-
+    //QScopedPointer<QApplication> app(createApplication(argc, argv));
+    //QScopedPointer<QGuiApplication> app(Sailfish::createApplication(argc, argv));
+    QGuiApplication app(argc, argv);
     // i18n stuff
     qDebug() << "I18N: local:" << QLocale::system().name();
     QString locale = QLocale::system().name();
@@ -33,8 +36,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     static QTranslator translator;
     if( translator.load(filename, ":/") ){
-        app->installTranslator(&translator);
-        QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
+        app.installTranslator(&translator);
+        // QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8")); // use default coded instead
         qDebug() << "I18N: Translation file loaded" << filename;
     } else
         qDebug() << "I18N: Translation file not loaded:" << filename;
@@ -44,8 +47,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterType<GnuPGConnector>("GnuPGConnector", 1, 0, "GnuPGConnector");
     qmlRegisterType<MailReader>("MailReader", 1, 0, "MailReader");
 
-    QmlApplicationViewer viewer;
-    QDeclarativeContext *ctxt = viewer.rootContext();
+    QtQuick2ApplicationViewer viewer;
+    QQmlContext *ctxt = viewer.rootContext();
     ctxt->setContextProperty("Release_Version", RELEASE);
     ctxt->setContextProperty("GnuPG_PATH", GPGBIN);
     ctxt->setContextProperty("GnuPG_TMPFILE", TMPFILE);
@@ -55,9 +58,8 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     ctxt->setContextProperty("TMP_DIR", TMP_DIR);
 
 
-    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer.setMainQmlFile(QLatin1String("qml/CryptMee/main.qml"));
     viewer.showExpanded();
 
-    return app->exec();
+    return app.exec();
 }

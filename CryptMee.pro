@@ -46,7 +46,8 @@ SOURCES += main.cpp \
     gnupgconnector.cpp
 
 # Please do not modify the following two lines. Required for deployment.
-include(qmlapplicationviewer/qmlapplicationviewer.pri)
+include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
+
 qtcAddDeployment()
 
 OTHER_FILES += \

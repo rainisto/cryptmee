@@ -4,7 +4,7 @@
 #include "mailobject.h"
 #include "mailreaderthread.h"
 
-#include <QDeclarativeItem>
+#include <QQuickItem>
 #include <QList>
 #include <QStringList>
 #include <QStringListModel>
@@ -12,12 +12,12 @@
 
 class MailObject;
 
-class MailReader : public QDeclarativeItem
+class MailReader : public QQuickItem
 {
     Q_OBJECT
 
 public:
-    explicit MailReader(QDeclarativeItem *parent = 0);
+    explicit MailReader(QQuickItem *parent = 0);
 
     Q_INVOKABLE void readMails(int _fromLastDays);
     Q_INVOKABLE QString getMail(int _i);
